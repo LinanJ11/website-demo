@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LJ Data Coaching</title>
+  <meta name="description" content="Practical Data Analyst coaching for Chinese students and early-career professionals in Australia." />
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --surface-soft: #f1eeea;
+      --text: #1f1d1a;
+      --muted: #6e685f;
+      --line: #ddd6cf;
+      --dark: #191715;
+      --dark-soft: #2a2622;
+      --white: #ffffff;
+      --max: 1120px;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(247,245,242,0.92);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .hero {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      padding: 84px 0;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 7vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      margin: 22px 0 0;
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--dark);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover { background: var(--surface-soft); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .who-card {
+      padding: 32px;
+    }
+
+    .who-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .who-item {
+      background: var(--surface-soft);
+      border-radius: 18px;
+      padding: 16px;
+      color: #3c3833;
+    }
+
+    section {
+      padding: 84px 0;
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .about-copy {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .about-copy p { margin-top: 0; }
+
+    .surface-section {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .service-card,
+    .step-card,
+    .gain-card,
+    .contact-card {
+      padding: 28px;
+    }
+
+    .service-card h3,
+    .step-card h3 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .service-card p,
+    .step-card p,
+    .gain-card p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .step-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .dark-section {
+      background: var(--dark);
+      color: var(--white);
+      border-top: 1px solid #302c28;
+      border-bottom: 1px solid #302c28;
+    }
+
+    .dark-section .eyebrow,
+    .dark-section .section-head p,
+    .dark-section .gain-card p {
+      color: rgba(255,255,255,0.72);
+    }
+
+    .gain-card {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-xl);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .contact-text p {
+      color: var(--muted);
+      font-size: 17px;
+      margin-top: 16px;
+    }
+
+    .contact-meta {
+      margin-top: 28px;
+      display: grid;
+      gap: 10px;
+      color: #3c3833;
+    }
+
+    .contact-card {
+      background: var(--surface-soft);
+    }
+
+    .placeholder-box {
+      border: 1px dashed #c4bbb2;
+      border-radius: 18px;
+      background: var(--surface);
+      padding: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .grid-2,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      section,
+      .hero-grid {
+        padding: 64px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <div class="brand-title">LJ Data Coaching</div>
+        <div class="brand-subtitle">Practical Data Analyst coaching for Chinese students in Australia</div>
+      </div>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#results">Results</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Data Analyst Career Coaching</p>
+          <h1>Practical Data Analyst Coaching for Chinese Students in Australia</h1>
+          <p class="lead">
+            Helping Chinese international students and early-career professionals in Australia better understand what Data Analysts actually do — and prepare for the role with clearer strategy, stronger projects, and practical interview support.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#contact">Book a Discovery Chat</a>
+            <a class="btn btn-secondary" href="#services">Explore Services</a>
+          </div>
+        </div>
+
+        <div class="card who-card">
+          <p class="eyebrow">Who This Is For</p>
+          <div class="who-list">
+            <div class="who-item">Chinese international students in Australia preparing for graduate or entry-level Data Analyst roles</div>
+            <div class="who-item">Early-career professionals with 1–3 years of experience who want to move closer to analytics work</div>
+            <div class="who-item">Candidates who have learned some SQL, Excel, or dashboards but still feel unsure how to turn that into a strong job application</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="section-head">
+          <p class="eyebrow">About</p>
+          <h2>A practical approach grounded in the real job market.</h2>
+        </div>
+        <div class="about-copy">
+          <p>
+            This coaching service is designed for Chinese international students and early-career professionals in Australia who want real progress toward a Data Analyst role. Instead of generic advice, the focus is on practical skill-building, clearer positioning, and preparation that matches the Australian job market.
+          </p>
+          <p>
+            The goal is simple: help you understand what Data Analysts actually do, what employers look for, and how to improve your profile step by step in a more realistic and focused way.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="surface-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Services</p>
+          <h2>How I Can Help</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card service-card">
+            <h3>Career Direction for DA Roles</h3>
+            <p>Understand what Data Analysts actually do in companies, what employers look for, and how to prepare in a way that fits the Australian job market.</p>
+          </div>
+          <div class="card service-card">
+            <h3>Project &amp; Portfolio Guidance</h3>
+            <p>Learn how to build and present projects that feel relevant to employers — not just tutorial-style work, but projects that tell a stronger business story.</p>
+          </div>
+          <div class="card service-card">
+            <h3>Resume &amp; Interview Preparation</h3>
+            <p>Get practical support on improving your resume, strengthening your project stories, and preparing for interviews with more clarity and confidence.</p>
+          </div>
+          <div class="card service-card">
+            <h3>1:1 Coaching &amp; Accountability</h3>
+            <p>Receive personalised guidance based on your background, current level, and goals — with structured support to help you stay focused and make real progress.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Process</p>
+          <h2>A Practical Coaching Process</h2>
+        </div>
+        <div class="grid-4">
+          <div class="card step-card">
+            <div class="step-label">Step 1</div>
+            <h3>Understand Your Starting Point</h3>
+            <p>We begin by looking at your background, current skills, goals, and where you feel stuck.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-label">Step 2</div>
+            <h3>Build a Clearer Strategy</h3>
+            <p>You’ll get a more realistic plan for what to focus on next, what to stop overthinking, and how to prepare more effectively.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-label">Step 3</div>
+            <h3>Strengthen Your Profile</h3>
+            <p>We work on the areas that matter most: projects, resume, interview stories, and how you position yourself for DA opportunities.</p>
+          </div>
+          <div class="card step-card">
+            <div class="step-label">Step 4</div>
+            <h3>Move Forward with More Confidence</h3>
+            <p>The goal is not just to learn more, but to become more job-ready with clearer direction and stronger preparation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="dark-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">What You Can Gain</p>
+          <h2>Clearer direction, stronger preparation, and more confidence.</h2>
+        </div>
+        <div class="grid-4">
+          <div class="gain-card">
+            <p>A clearer understanding of what Data Analysts actually do</p>
+          </div>
+          <div class="gain-card">
+            <p>A more realistic roadmap for preparing for DA roles</p>
+          </div>
+          <div class="gain-card">
+            <p>Stronger project ideas and better ways to present them</p>
+          </div>
+          <div class="gain-card">
+            <p>A more focused resume and interview story</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container about-grid">
+        <div class="section-head">
+          <p class="eyebrow">About Me</p>
+          <h2>Practical guidance shaped by real business context.</h2>
+        </div>
+        <div class="about-copy">
+          <p>
+            I currently work in analytics and have experience with real business data in a large company environment, including Amazon. This has given me a more grounded view of what Data Analysts actually do, how business thinking matters, and what stronger candidates often do differently.
+          </p>
+          <p>
+            I created this coaching service for Chinese international students and early-career professionals in Australia who want more than generic learning advice. My focus is on helping you understand the real role, prepare relevant projects, improve your resume and interview stories, and move forward with a clearer strategy.
+          </p>
+          <p>
+            The goal is simple: to make your preparation more practical, more focused, and more aligned with the Australian job market.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="surface-section">
+      <div class="container contact-grid">
+        <div class="contact-text">
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s Talk About Your DA Goals</h2>
+          <p>
+            If you’re a Chinese student or early-career professional in Australia trying to figure out the Data Analyst path, you’re welcome to reach out for a discovery chat.
+          </p>
+          <div class="contact-meta">
+            <div>Email: hello@ljdatacoaching.com</div>
+            <div>Location: Sydney, Australia</div>
+            <div>Availability: By appointment</div>
+          </div>
+        </div>
+        <div class="card contact-card">
+          <h3 style="margin-top:0;">Placeholder for your contact form</h3>
+          <div class="placeholder-box">
+            For the first version, you can replace this box later with a Google Form, Tally form, Typeform, Calendly link, or just your email / WeChat contact details.
+          </div>
+          <div class="actions" style="margin-top:20px;">
+            <a class="btn btn-primary" href="mailto:hello@ljdatacoaching.com">Email Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 LJ Data Coaching. All rights reserved.</div>
+      <div>Built for trust, clarity, and practical career support.</div>
+    </div>
+  </footer>
+</body>
+</html>
